@@ -44,6 +44,20 @@ def load_documents(directory):
                 data['content'].append(text)
     return pd.DataFrame(data)
 
+
+def search_documents(df, search_words):
+
+    # gibt für einen Text (=Input), die gefundenen Suchwörter zurück (String als Output)
+    def find_keywords(text):
+        found = [word for word in search_words if word.lower() in text.lower()]
+        return ', '.join(found) if found else None
+
+    # wendet für jeden Text in Content-Spalte find_keywords an
+    df['Gefundene Suchwörter'] = df['content'].apply(find_keywords)
+
+    # entfernt die Zeilen, die keinen Eintrag bei Gefundende Suchwörter haben
+    return df.dropna(subset=['Gefundene Suchwörter'])
+
 # INPUT:
 # Verzeichnis mit Dokumenten
 #directory = r'D:\\Programmierung\PyCharm\eigeneProjekte\Dokumentenfilter'

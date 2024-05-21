@@ -12,8 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 import os
 import pandas as pd
-from read_load_documents import load_documents
-from search_files import search_documents
+from handle_documents import load_documents, search_documents
+#from read_load_documents import load_documents
+#from search_files import search_documents
 
 
 class Ui_MainWindow(object):
@@ -87,13 +88,14 @@ class Ui_MainWindow(object):
         self.tabellenausgabe = QtWidgets.QTableView(self.centralwidget)
         self.tabellenausgabe.setGeometry(QtCore.QRect(60, 506, 661, 131))
         self.tabellenausgabe.setStyleSheet("background-color: rgb(49, 49, 49);\n"
-"color: rgb(255, 255, 255);\n"
-"font: 14pt \"MS Shell Dlg 2\";")
+                    "color: rgb(255, 255, 255);\n"
+                    "font: 14pt \"MS Shell Dlg 2\";")
         self.tabellenausgabe.setObjectName("tabellenausgabe")
         self.ordnerpfadanzeige = QtWidgets.QLabel(self.centralwidget)
         self.ordnerpfadanzeige.setGeometry(QtCore.QRect(60, 333, 661, 31))
 
 
+        self.directory = None
 
 
         self.ordnerpfadanzeige.setStyleSheet("font: 11pt \"MS Shell Dlg 2\";\n"
@@ -127,19 +129,19 @@ class Ui_MainWindow(object):
         directory = QFileDialog.getExistingDirectory(None, "Verzeichnis auswählen", "", options)
         if directory:
             self.directory = directory
-            print(f"Ausgewähltes Verzeichnis: {directory}")
+            self.df = load_documents(self.directory)
+            #print(f"Ausgewähltes Verzeichnis: {directory}")
             # Aktualisiere den Text des QLabel-Widgets
             elided_text = QtGui.QFontMetrics(self.ordnerpfadanzeige.font()).elidedText(directory, QtCore.Qt.ElideMiddle,
                                                                                        self.ordnerpfadanzeige.width() - 10)
             self.ordnerpfadanzeige.setText(f" {elided_text}")
-            self.df = load_documents(self.directory)
 
             return directory
 
     def start_keyword_search(self):
         if self.directory:
             # Dokumente laden
-            self.df = load_documents(self.directory)
+            #self.df = load_documents(self.directory)
             self.df.to_pickle('documents.pkl')
 
             # Stichwort aus dem Eingabefeld holen
@@ -169,10 +171,82 @@ class Ui_MainWindow(object):
 
         for index, row in results.iterrows():
             filename_item = QtGui.QStandardItem(row['filename'])
+            filename_item.setTextAlignment(QtCore.Qt.AlignCenter)  # Zelleninhalt zentrieren
+            filename_item.setToolTip(row['filename'])  # Wichtig: "Tooltip" ermöglicht Anzeige für hovern
             keywords_item = QtGui.QStandardItem(row['Gefundene Suchwörter'])
+            keywords_item.setTextAlignment(QtCore.Qt.AlignCenter)
+            keywords_item.setToolTip(row['Gefundene Suchwörter'])  # Wichtig: "Tooltip" ermöglicht Anzeige für hovern
             model.appendRow([filename_item, keywords_item])
 
         self.tabellenausgabe.setModel(model)
+
+        # StyleSheet für QTableView setzen
+        self.tabellenausgabe.setStyleSheet("""
+                 QTableView {
+            background-color: rgb(49, 49, 49);
+            color: rgb(255, 255, 255);
+            gridline-color: rgb(80, 80, 80);
+            font-size: 15px; /* Schriftgröße für die Zellen */
+        }
+        QTableView::item {
+            background-color: rgb(49, 49, 49);
+            color: rgb(255, 255, 255);
+        }
+        QHeaderView::section {
+            background-color: rgb(49, 49, 49);
+            color: rgb(255, 255, 255);
+            border: 1px solid rgb(80, 80, 80);
+            font-size: 18px; /* Schriftgröße für die Spaltenüberschriften */
+        }
+        QTableCornerButton::section {
+            background-color: rgb(49, 49, 49);
+            border: 1px solid rgb(80, 80, 80);
+        }
+        
+        
+          QScrollBar:vertical {
+        border: 1px solid rgb(80, 80, 80);
+        background: rgb(49, 49, 49);
+        width: 15px;
+        margin: 15px 0 15px 0;
+    }
+    QScrollBar::handle:vertical {
+        background: rgb(255, 255, 255);
+        min-height: 20px;
+    }
+    QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+        border: 1px solid rgb(80, 80, 80);
+        background: rgb(49, 49, 49);
+        height: 15px;
+        subcontrol-origin: margin;
+    }
+    QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {
+        background: rgb(80, 80, 80);
+    }
+    QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+        background: none;
+    }
+      """)
+
+        # Spaltenbreiten setzen
+        self.tabellenausgabe.setColumnWidth(0, 200)  # 'Dateiname'
+        self.tabellenausgabe.setColumnWidth(1, 300)  # 'Gefundene Suchwörter'
+
+        header = self.tabellenausgabe.horizontalHeader()
+        for col in range(model.columnCount()):
+            self.tabellenausgabe.setColumnWidth(col, 200)
+
+        header.setDefaultAlignment(QtCore.Qt.AlignCenter)
+
+        vertical_header = self.tabellenausgabe.verticalHeader()
+        vertical_header.setStyleSheet("QHeaderView::section { padding-left: 12px; }")
+
+# Bsp.: die+der+teils+Bewerber+Thema+als+für+Rat+oftmals+Auswahlverfahren
+
+       # self.tabellenausgabe.horizontalHeader().setStretchLastSection(True)
+ # self.tabellenausgabe.verticalHeader().setStretchLastSection(True)
+        self.tabellenausgabe.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.tabellenausgabe.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
