@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from PyPDF2 import PdfReader
+from docx import Document
 
 def extract_text_from_txt(file_path):
     try:
@@ -10,7 +11,15 @@ def extract_text_from_txt(file_path):
     except:
         return None
 
-#extrahiert "nur" die eingefügte Kommentare der PDF
+def extract_text_from_docx(docx_path):
+    try:
+        doc = Document(docx_path)
+        text = '\n'.join([paragraph.text for paragraph in doc.paragraphs if paragraph.text])
+        return text
+    except:
+        return None
+
+#extrahiert "nur" die eingefügten Kommentare der PDF
 def extract_text_from_pdf(pdf_path):
     try:
         reader = PdfReader(pdf_path)
@@ -19,26 +28,18 @@ def extract_text_from_pdf(pdf_path):
     except:
         return None
 
-
-#def extract_text_from_docx(docx_path):
-#    try:
-#        doc = Document(docx_path)
-#        text = '\n'.join([paragraph.text for paragraph in doc.paragraphs if paragraph.text])
-#        return text
-#    except:
-#        return None
-
-
 def load_documents(directory):
     data = {'filename': [], 'content': []}
     for root, dirs, files in os.walk(directory):
         for filename in files:
             filepath = os.path.join(root, filename)
             text = None
-            if filename.endswith('.pdf'):
-                text = extract_text_from_pdf(filepath)
-            elif filename.endswith('.txt'):
+            if filename.endswith('.txt'):
                 text = extract_text_from_txt(filepath)
+            elif filename.endswith('.docx'):
+                text = extract_text_from_docx(filepath)
+            elif filename.endswith('.pdf'):
+                text = extract_text_from_pdf(filepath)
             if text:
                 data['filename'].append(filename)
                 data['content'].append(text)
@@ -57,11 +58,4 @@ def search_documents(df, search_words):
 
     # entfernt die Zeilen, die keinen Eintrag bei Gefundende Suchwörter haben
     return df.dropna(subset=['Gefundene Suchwörter'])
-
-# INPUT:
-# Verzeichnis mit Dokumenten
-#directory = r'D:\\Programmierung\PyCharm\eigeneProjekte\Dokumentenfilter'
-
-
-#print(df)
 
