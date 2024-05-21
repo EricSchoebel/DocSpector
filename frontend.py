@@ -95,6 +95,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.directory = None
+        self.df = None
 
         self.button_verzeichnis.clicked.connect(self.set_requested_directory)
         self.button_stichwortsuche.clicked.connect(self.start_keyword_search)
