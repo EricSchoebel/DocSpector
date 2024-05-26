@@ -17,7 +17,7 @@ By Eric Schöbel
 
 **Application**
 
-The program is written in *Python*. To start the program ...
+The program is written in *Python*. An executable version can be downloaded [here](https://github.com/EricSchoebel/DocSpector/releases).
 
 Screenshot of the interface:
 
