@@ -76,4 +76,3 @@ def search_documents(df, search_words):
 
     # entfernt die Zeilen, die keinen Eintrag bei Gefundende Suchwörter haben
     return df.dropna(subset=['Gefundene Suchwörter'])
-
