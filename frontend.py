@@ -1,7 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
-import os
-import pandas as pd
 from handle_documents import load_documents, search_documents
 
 class Ui_MainWindow(object):
