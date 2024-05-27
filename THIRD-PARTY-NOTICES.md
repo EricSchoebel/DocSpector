@@ -58,6 +58,3 @@ The following links provide access to the text of licenses used by third-party l
 - **Python Software Foundation License**: [Python Software Foundation License Text](https://docs.python.org/3/license.html)
 - **Zope Public License**: [Zope License 2.1 Text](https://opensource.org/licenses/ZPL-2.1)
 - **Historical Permission Notice and Disclaimer (HPND)**: [HPND License Text](https://spdx.org/licenses/HPND.html)
-
-Please ensure to review the specific license details of each package to understand the permissions and limitations that may apply.
-
