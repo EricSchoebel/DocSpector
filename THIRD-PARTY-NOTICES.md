@@ -18,7 +18,7 @@ This project includes software from third parties, including:
 | charset-normalizer        | 3.3.2       | MIT License                                                    |
 | future                    | 1.0.0       | MIT License                                                    |
 | gevent                    | 22.10.2     | MIT License                                                    |
-| gevent-websocket          | 0.10.1      | Copyright 2011-2017 Jeffrey Gelens <jeffrey@noppo.pro>         |
+| gevent-websocket          | 0.10.1      | Copyright 2011-2017 Jeffrey Gelens jeffrey@noppo.pro         |
 | greenlet                  | 3.0.3       | MIT License                                                    |
 | idna                      | 3.7         | BSD License                                                    |
 | importlib-metadata        | 6.7.0       | Apache Software License                                        |
