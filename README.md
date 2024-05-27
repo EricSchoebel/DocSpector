@@ -30,9 +30,6 @@ Dieses Projekt ist unter der GNU General Public License v3.0 (GPLv3) lizenziert.
 
 Dieses Projekt verwendet Software von Drittanbietern, die ihren eigenen Lizenzen unterliegt. Eine detaillierte Liste dieser Drittanbieter-Bibliotheken und ihrer jeweiligen Lizenzen finden Sie in dem Dokument [Hinweise zu Drittanbieter-Software](./THIRD-PARTY-NOTICES.md).
 
-### Zusätzliche Lizenzhinweise
-
-Es ist wichtig, die Informationen in den Dokumenten `LICENSE.md` und `THIRD-PARTY-NOTICES.md` zu überprüfen, um die Ihnen gewährten Berechtigungen und die geltenden Einschränkungen vollständig zu verstehen.
 
 
 
