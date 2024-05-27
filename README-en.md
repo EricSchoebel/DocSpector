@@ -23,3 +23,14 @@ Screenshot of the interface:
 
 ![GUI](./Screenshot_GUI.png "GUI")
 
+## License Information
+
+This project is licensed under the GNU General Public License v3.0 (GPLv3). For more details on the license, please see the [LICENSE](./LICENSE) file included in this repository.
+
+### Third-Party Software
+
+This project uses software from third-party libraries, which are subject to their own licenses. For a detailed list of these third-party libraries and their respective licenses, please refer to the [Third-Party-Notices](./THIRD-PARTY-NOTICES.md) document.
+
+### Additional Licensing Notes
+
+It is important to review the licensing information in both the `LICENSE.md` and `THIRD-PARTY-NOTICES.md` documents to fully understand the permissions and restrictions that may apply to the usage of this software and its dependencies.
