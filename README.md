@@ -3,7 +3,7 @@
 
 von Eric Schöbel
 
-**DocSpector** ist eine auf PyQt5 basierende Desktop-Anwendung, die dazu entwickelt wurde, in verschiedenen Dokumenttypen innerhalb eines angegebenen Verzeichnisses nach Stichwörtern zu suchen. Die Anwendung unterstützt Textdateien, Microsoft Word-Dokumente und Kommentare in PDF-Dateien. Benutzer können ein Verzeichnis zur Suche angeben und Stichwörter eingeben, um Dokumente zu finden, die diese Stichwörter enthalten.
+**DocSpector** ist eine auf PyQt5 basierende Desktop-Anwendung, die dazu entwickelt wurde, in verschiedenen Dokumenttypen innerhalb eines angegebenen Verzeichnisses nach Stichwörtern zu suchen. Die Anwendung unterstützt Textdateien, Microsoft Word-Dokumente und eingefügte Textfelder in PDF-Dateien. Benutzer können ein Verzeichnis zur Suche angeben und Stichwörter eingeben, um Dokumente zu finden, die diese Stichwörter enthalten.
 
 
 **Features**
