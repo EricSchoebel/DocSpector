@@ -37,7 +37,7 @@ def extract_text_from_docx(docx_path):
     except:
         return None
 
-#extrahiert "nur" die eingefügten Kommentare der PDF
+#extrahiert "nur" die eingefügten Textfelder der PDF
 def extract_text_from_pdf(pdf_path):
     try:
         reader = PdfReader(pdf_path)
