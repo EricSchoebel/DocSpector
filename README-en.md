@@ -3,14 +3,14 @@
 
 By Eric Schöbel
 
-**DocSpector** is a PyQt5-based desktop application designed to search for keywords in various document types within a specified directory. The application supports text files, Microsoft Word documents and inserted text boxes in PDF files. Users can specify a directory to search and input keywords to find documents containing those keywords.
+**DocSpector** is a PyQt5-based desktop application designed to search for keywords in various document types within a specified directory (and its subdirectories). The application supports text files, Microsoft Word documents and inserted text boxes in PDF files. Users can specify a directory to search and input keywords to find documents containing those keywords.
 
 
 **Features**
 
-+ Directory Selection ("Ordnerpfad festlegen"): Allows users to select a directory containing documents to be searched. The content of the documents is loaded.
++ Directory Selection ("Ordnerpfad festlegen"): Allows users to select a directory containing documents to be searched. The content of the documents is loaded. Subfolders are also taken into account.
 + Keyword Search ("Stichwortsuche starten"): Users can input potentially multiple keywords separated by a '+' character to search for within the documents.
-+ Results Display: Displays the filenames and found keywords in a table view.
++ Results Display: Displays the filenames and found keywords in a table view. Hovering over the filename displays the full file path. Clicking the filename opens the file.
 + User Interface: A sleek, dark-themed interface with clear instructions on the buttons.
 + "Beenden": Terminates the application.
 
