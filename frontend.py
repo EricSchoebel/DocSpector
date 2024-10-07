@@ -180,6 +180,28 @@ class Ui_MainWindow(object):
                 background-color: rgb(49, 49, 49);
                 border: 1px solid rgb(80, 80, 80);
             }
+                            QScrollBar:vertical {
+                    border: 1px solid rgb(80, 80, 80);
+                    background: rgb(49, 49, 49);
+                    width: 15px;
+                    margin: 15px 0 15px 0;
+                }
+                QScrollBar::handle:vertical {
+                    background: rgb(255, 255, 255);
+                    min-height: 20px;
+                }
+                QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                    border: 1px solid rgb(80, 80, 80);
+                    background: rgb(49, 49, 49);
+                    height: 15px;
+                    subcontrol-origin: margin;
+                }
+                QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {
+                    background: rgb(80, 80, 80);
+                }
+                QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+                    background: none;
+                }
         """)
         self.tabellenausgabe.setColumnWidth(0, 200)  # Größe für Dateinamen
         self.tabellenausgabe.setColumnWidth(1, 300)
