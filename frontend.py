@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 from handle_documents import load_documents, search_documents
+import webbrowser
 
 class Ui_MainWindow(object):
 
@@ -137,67 +138,50 @@ class Ui_MainWindow(object):
             self.show_results(results)
 
     def show_results(self, results):
-
         model = QtGui.QStandardItemModel()
         model.setHorizontalHeaderLabels(['Dateiname', 'Gefundene Suchwörter'])
 
         for index, row in results.iterrows():
-            filename_item = QtGui.QStandardItem(row['filename'])
+            file_path = row['filepath']
+            file_name = row['filename']
+
+            filename_item = QtGui.QStandardItem(file_name)
+            filename_item.setData(file_path, QtCore.Qt.UserRole)
             filename_item.setTextAlignment(QtCore.Qt.AlignCenter)
-            filename_item.setToolTip(row['filename'])  # Wichtig: "Tooltip" ermöglicht Anzeige für hovern
+            filename_item.setToolTip(file_path)   # Wichtig: "Tooltip" ermöglicht Anzeige für hovern
+
             keywords_item = QtGui.QStandardItem(row['Gefundene Suchwörter'])
             keywords_item.setTextAlignment(QtCore.Qt.AlignCenter)
             keywords_item.setToolTip(row['Gefundene Suchwörter'])  # Wichtig: "Tooltip" ermöglicht Anzeige für hovern
+
             model.appendRow([filename_item, keywords_item])
 
         self.tabellenausgabe.setModel(model)
+        self.tabellenausgabe.clicked.connect(self.open_file_from_table)
 
-        #Tabelle formatieren
         self.tabellenausgabe.setStyleSheet("""
-                QTableView {
-                    background-color: rgb(49, 49, 49);
-                    color: rgb(255, 255, 255);
-                    gridline-color: rgb(80, 80, 80);
-                    font-size: 15px; /* Schriftgröße für die Zellen */
-                }
-                QTableView::item {
-                    background-color: rgb(49, 49, 49);
-                    color: rgb(255, 255, 255);
-                }
-                QHeaderView::section {
-                    background-color: rgb(49, 49, 49);
-                    color: rgb(255, 255, 255);
-                    border: 1px solid rgb(80, 80, 80);
-                    font-size: 18px; /* Schriftgröße für die Spaltenüberschriften */
-                }
-                QTableCornerButton::section {
-                    background-color: rgb(49, 49, 49);
-                    border: 1px solid rgb(80, 80, 80);
-                }
-                QScrollBar:vertical {
-                    border: 1px solid rgb(80, 80, 80);
-                    background: rgb(49, 49, 49);
-                    width: 15px;
-                    margin: 15px 0 15px 0;
-                }
-                QScrollBar::handle:vertical {
-                    background: rgb(255, 255, 255);
-                    min-height: 20px;
-                }
-                QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
-                    border: 1px solid rgb(80, 80, 80);
-                    background: rgb(49, 49, 49);
-                    height: 15px;
-                    subcontrol-origin: margin;
-                }
-                QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {
-                    background: rgb(80, 80, 80);
-                }
-                QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-                    background: none;
-                }
-                """)
-        self.tabellenausgabe.setColumnWidth(0, 200)
+            QTableView {
+                background-color: rgb(49, 49, 49);
+                color: rgb(255, 255, 255);
+                gridline-color: rgb(80, 80, 80);
+                font-size: 15px;
+            }
+            QTableView::item {
+                background-color: rgb(49, 49, 49);
+                color: rgb(255, 255, 255);
+            }
+            QHeaderView::section {
+                background-color: rgb(49, 49, 49);
+                color: rgb(255, 255, 255);
+                border: 1px solid rgb(80, 80, 80);
+                font-size: 18px;
+            }
+            QTableCornerButton::section {
+                background-color: rgb(49, 49, 49);
+                border: 1px solid rgb(80, 80, 80);
+            }
+        """)
+        self.tabellenausgabe.setColumnWidth(0, 200)  # Größe für Dateinamen
         self.tabellenausgabe.setColumnWidth(1, 300)
         header = self.tabellenausgabe.horizontalHeader()
         for col in range(model.columnCount()):
@@ -207,6 +191,12 @@ class Ui_MainWindow(object):
         vertical_header.setStyleSheet("QHeaderView::section { padding-left: 12px; }")
         self.tabellenausgabe.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         self.tabellenausgabe.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
+    def open_file_from_table(self, index):
+        if index.column() == 0:
+            file_path = index.data(QtCore.Qt.UserRole)
+            if file_path:
+                webbrowser.open(file_path)
 
     def button_end_app(self):
         app.quit()

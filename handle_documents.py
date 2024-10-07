@@ -47,7 +47,7 @@ def extract_text_from_pdf(pdf_path):
         return None
 
 def load_documents(directory):
-    data = {'filename': [], 'content': []}
+    data = {'filename': [], 'content': [], 'filepath': []}
     for root, dirs, files in os.walk(directory):
         for filename in files:
             filepath = os.path.join(root, filename)
@@ -61,8 +61,8 @@ def load_documents(directory):
             if text:
                 data['filename'].append(filename)
                 data['content'].append(text)
+                data['filepath'].append(filepath)
     return pd.DataFrame(data)
-
 
 def search_documents(df, search_words):
 
